@@ -1,0 +1,19 @@
+.esri-view {
+    height: 120vh;
+    width: 100%;
+    outline: none;
+}
+
+.search,
+.logo {
+    position: absolute;
+    right: 15px;
+}
+
+.search {
+    top: 15px;
+}
+
+.logo {
+    bottom: 30px;
+}
