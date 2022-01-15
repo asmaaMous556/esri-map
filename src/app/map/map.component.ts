@@ -38,9 +38,9 @@ export class MapComponent implements OnInit {
       const mapViewProperties = new MapView ({
 
         container: this.mapViewElement.nativeElement,
-        zoom:9,
+        zoom:14,
         map,
-        center: [30.033333, 31.233334],
+        center: [31.233334,30.033333],
 
       })
 
@@ -57,26 +57,26 @@ this.mapView=mapViewProperties
         image: "/assets/save-instagram.png"
       };
       const popupTrailheads = {
+
         actions: [saveThisAction]
       }
 
 
     const trailheads = new FeatureLayer({
-      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/TrailRuns/FeatureServer/0",
+      url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads_Styled/FeatureServer/0",
+      outFields: ["CITY_JUR"],
       popupTemplate: popupTrailheads
       });
       map.add(trailheads);
 
-
-
-
-
-// mapViewProperties.popup.autoOpenEnabled = true;
-
 mapViewProperties.on("click", (event:any) => {
+  console.log(mapViewProperties.popup);
+
   mapViewProperties.popup.open({
-    "title": "Location",
+    "title": "feature",
     "content": "<b>City:</b> {CITY_JUR}<br>",
+
+
     actions: [saveThisAction]
 
   });
@@ -84,14 +84,13 @@ mapViewProperties.on("click", (event:any) => {
 
 
   mapViewProperties.popup.on("trigger-action", (popEvent:any) => {
-console.log(2222);
 
-     // Execute the saveThis() function if the measure-this action is clicked
+     // Execute the saveThis() function if the save-this action is clicked
 
      if (popEvent.action.id === "save-this") {
 
        this.saveLocation(event.mapPoint);
-      //  window.alert('location is saved!')
+       window.alert('location is saved!')
      }
 
    });
@@ -104,13 +103,12 @@ console.log(2222);
 
   saveLocation(mapPoint: any) {
     this.savedLocations.push({lat:mapPoint.latitude,lng:mapPoint.longitude});
-console.log(this.savedLocations);
-
 
   }
 
   center(location:any)
 {
+
 
   // console.log(location);
 this.mapView.center.latitude=location.lat;
