@@ -58,18 +58,19 @@ this.mapView=mapViewProperties
         id: "save-this",
         image: "/assets/save-instagram.png"
       };
-      const popupTrailheads = {
-
+      const template = {
+        title: "{NAME} in {COUNTY}",
         actions: [saveThisAction]
       }
 
 
-    const trailheads = new FeatureLayer({
-      url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads_Styled/FeatureServer/0",
-      outFields: ["CITY_JUR"],
-      popupTemplate: popupTrailheads
+      const featureLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Marital_Status_Boundaries/FeatureServer/2",
+        popupTemplate:template
       });
-      map.add(trailheads);
+      map.add(featureLayer);
+
+      // add bookmarks
       const bookmarks = new Bookmarks({
         view:mapViewProperties,
         // allows bookmarks to be added, edited, or deleted
@@ -89,9 +90,9 @@ this.mapView=mapViewProperties
       mapViewProperties.ui.add(bkExpand, "top-right");
 
 
-mapViewProperties.on("click", (event:any) => {
-  console.log(mapViewProperties.popup);
+ mapViewProperties.on("click", (event:any) => {
 
+console.log( mapViewProperties.popup)
   mapViewProperties.popup.open({
     "title": "feature",
     "content": "<b>City:</b> {CITY_JUR}<br>",
@@ -102,19 +103,8 @@ mapViewProperties.on("click", (event:any) => {
   });
 
 
-
-  mapViewProperties.popup.on("trigger-action", (popEvent:any) => {
-
-     // Execute the saveThis() function if the save-this action is clicked
-
-     if (popEvent.action.id === "save-this") {
-
-       this.saveLocation(event.mapPoint);
-       window.alert('location is saved!')
-     }
-
-   });
 });
+
     });
 
 
