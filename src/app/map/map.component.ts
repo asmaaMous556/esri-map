@@ -24,8 +24,10 @@ export class MapComponent implements OnInit {
   }
 
   setMap(){
-    loadModules(['esri/config','esri/Map', 'esri/views/MapView',"esri/layers/FeatureLayer","esri/widgets/Popup"])
-    .then(([ esriConfig,Map, MapView, FeatureLayer]: any[]) => {
+    loadModules(['esri/config','esri/Map', 'esri/views/MapView',
+    "esri/layers/FeatureLayer","esri/widgets/Popup",
+    "esri/widgets/Bookmarks","esri/widgets/Expand"])
+    .then(([ esriConfig,Map, MapView, FeatureLayer,Bookmarks,Expand]: any[]) => {
       // set default map properties
       esriConfig.apiKey = "AAPK3f623025fae04c37990e063263c9b1c6C_KPyopaDwcdvmLSzMw5e3dnmWfC5Q6sGqozIDy7zDwDoOIiHzRzSXR1RqBMOH86";
 
@@ -68,6 +70,24 @@ this.mapView=mapViewProperties
       popupTemplate: popupTrailheads
       });
       map.add(trailheads);
+      const bookmarks = new Bookmarks({
+        view:mapViewProperties,
+        // allows bookmarks to be added, edited, or deleted
+        editingEnabled: true,
+        visibleElements: {
+          time: false // don't show the time (h:m:s) next to the date
+        }
+      });
+
+      const bkExpand = new Expand({
+        view: mapViewProperties,
+        content: bookmarks,
+        expanded: true
+      })
+
+      // Add the widget to the top-right corner of the view
+      mapViewProperties.ui.add(bkExpand, "top-right");
+
 
 mapViewProperties.on("click", (event:any) => {
   console.log(mapViewProperties.popup);
