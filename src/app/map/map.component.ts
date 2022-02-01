@@ -48,7 +48,7 @@ export class MapComponent implements OnInit {
 
 
 mapViewProperties.ui.components = (["attribution", "compass", "zoom"]);
-this.mapView=mapViewProperties
+// this.mapView=mapViewProperties
 
   //    this.mapView = new MapView(mapViewProperties);
 
